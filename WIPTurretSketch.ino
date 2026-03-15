@@ -44,31 +44,32 @@ void loop() {
   // X axis 
 
   Wire.beginTransmission(0x68);
-  Wire.write(0x43);
+  Wire.write(0x3D);
   Wire.endTransmission(false);
 
   Wire.requestFrom(0x68, 2);
 
   int16_t wireReadX = Wire.read() << 8  | Wire.read();
   int16_t wireReadY = Wire.read() << 8  | Wire.read();
-  wireReadX /= -12;
-  Serial.println(wireReadX);
+  
   
 
   counter++;
-  if (counter == 10){
-    Serial.println(wireReadX);
-    Wire.read();
-    if(wireReadX >= 255){
-      baseServo.write(255);
-    }
-    else if(wireReadX <= -255){
-      baseServo.write(-255);  
-    }
-    else{
-          baseServo.write(wireReadX/2);
-    }
-    //servoX += wireReadX;     ///dunno
+
+  int Xval = wireReadX/1000;
+  Xval = (90 + (Xval*4));
+
+  
+  
+
+  if (counter == 2){
+    //Serial.println(wireReadX);
+    Serial.println(Xval);
+    //Wire.read();
+    /////logic///
+    baseServo.write(Xval);
+  
+    /////logic end
     counter = 0;
   }
   

@@ -48,7 +48,7 @@ void loop() {
 
   // Z axis
   Wire.beginTransmission(0x68);
-  Wire.write(0x47);  //3F or 47
+  Wire.write(0x3F);  //3F or 47
   Wire.endTransmission(false);
   Wire.requestFrom(0x68, 2);
   int16_t wireReadZ = Wire.read() << 8 | Wire.read();
@@ -73,10 +73,11 @@ void loop() {
   //Z axis
   Serial.print(" Z value: ");   //print Z
   if (Zval > Zvalsteady) {
-    Zvalsteady = Zval;
-  } else if (Zval < Zvalsteady) {
-    Zvalsteady = Zval;
-  }
+    Zvalsteady = Zval; 
+  }  
+  if (Zval < Zvalsteady) {
+    Zvalsteady = Zval; 
+  }  
 
   Serial.println(Zvalsteady - 85);   //print Z
   
